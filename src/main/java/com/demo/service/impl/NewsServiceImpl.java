@@ -30,7 +30,7 @@ public class NewsServiceImpl implements NewsService {
     private String toutiaoTemplate = "https://m.toutiao.com/i%s/";
 
     //最后一个behot_time  模拟翻动次数
-    private int latestbehot_time = 0, like_huadong_times = 20;
+    private int latestbehot_time = 0, like_huadong_times = 15;
 
     @Autowired
     private NewsMapper newsMapper;
@@ -128,8 +128,9 @@ public class NewsServiceImpl implements NewsService {
     @Transactional(rollbackFor = RuntimeException.class)
     public void insertNews(News news, Newsdetail newsdetail, String groupid) {
         try {
-            newsMapper.insert(news);
-            newsdetailMapper.insert(newsdetail);
+            int i1 = newsMapper.insert(news);
+            int i2 = newsdetailMapper.insert(newsdetail);
+            System.out.println(groupid + " " + i1 + " " + i2);
         } catch (Exception ex) {
             System.out.println(String.format("news 插入失败 %s %s %s", news.getGroupid(), news.getDisplayurl(), news.getTitle()));
             System.out.println(String.format("news 插入失败 %s %s %s", newsdetail.getGroupid(), groupid, newsdetail.getTitle()));
